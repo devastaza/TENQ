@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:local="clr-namespace:CSharp_Shell"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="CSharp_Shell.Game">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType = "Button">
+				<Setter Property = "Padding" Value = "15, 0, 15, 0"/>
+				<Setter Property = "HeightRequest" Value = "40"/>
+				<Setter Property = "Margin" Value = "0, 5"/>
+				<Setter Property = "CornerRadius" Value = "5"/>
+				<Setter Property = "BackgroundColor" Value = "#363652"/>
+				<Setter Property = "Opacity" Value = "0"/>
+			</Style>
+			<Style TargetType = "Label">
+				<Setter Property = "FontSize" Value = "17"/>
+			</Style>
+			<Style x:Key = "menuButtons" TargetType = "Button">
+				<Setter Property = "Opacity" Value = "1"/>
+				<Setter Property = "HorizontalOptions" Value = "FillAndExpand"/>
+				<Setter Property = "Margin" Value = "10, 5"/>
+				<Setter Property = "Padding" Value = "30, 0"/>
+				<Setter Property = "HeightRequest" Value = "34"/>
+				<Setter Property = "CornerRadius" Value = "5"/>
+				<Setter Property = "BackgroundColor" Value = "#363652"/>
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+<Grid BackgroundColor = "#252530">
+	<Image 
+		x:Name = "backgroundImage"
+		HorizontalOptions = "FillAndExpand"
+		VerticalOptions = "FillAndExpand"
+		BindingContext = ""
+		Aspect = "AspectFill"/>
+	<Image 
+		x:Name = "backgroundGif"
+		HorizontalOptions = "FillAndExpand"
+		VerticalOptions = "FillAndExpand"
+		BindingContext = ""
+		Opacity = "0"
+		Aspect = "Fill"/>
+	<ScrollView x:Name = "pageScroll">
+		<StackLayout x:Name = "majorLayout">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer
+					Tapped = "TextTapped"/>
+			</StackLayout.GestureRecognizers>
+			
+			<StackLayout x:Name = "subtitleField" HorizontalOptions = "CenterAndExpand" Margin = "10,10,10,0">
+				<Label
+					x:Name = "subtitle"
+					FontSize = "Subtitle"/>
+				<StackLayout.GestureRecognizers>
+					<TapGestureRecognizer
+						Tapped = "OpenCloseMenu"/>
+				</StackLayout.GestureRecognizers>
+			</StackLayout>
+			<BoxView
+				x:Name = "subtitleLine"
+				HeightRequest = "1"
+				BackgroundColor = "White"
+				Margin = "20, 0"
+				Opacity = "0"/>
+			<StackLayout x:Name = "addonLayout"/>
+			<ScrollView
+				x:Name = "imgField"
+				Orientation = "Both"
+				HorizontalOptions = "Center" 
+				HeightRequest = "250"
+				Padding = "0"
+				IsVisible = "false"
+				WidthRequest = "400">
+				<Frame x:Name = "imgFrame" BackgroundColor = "#00000000" Padding = "0" WidthRequest = "400" HeightRequest = "250" VerticalOptions = "FillAndExpand" HorizontalOptions = "FillAndExpand" CornerRadius = "10">
+					<Image
+						x:Name = "image"
+						Aspect = "Fill">
+						<Image.GestureRecognizers>
+							<TapGestureRecognizer
+								NumberOfTapsRequired = "2"
+								Tapped = "ImageFocusing"/>
+							<TapGestureRecognizer
+								Tapped = "TextTapped"/>
+						</Image.GestureRecognizers>
+					</Image>
+				</Frame>
+			</ScrollView>
+			<Frame
+				x:Name = "textField"
+				VerticalOptions = "StartAndExpand"
+				CornerRadius = "10"
+				BackgroundColor = "#33000000"
+				Margin = "10"
+				IsVisible = "false">
+				<Label
+					x:Name = "text"/>
+				<Frame.GestureRecognizers>
+					<TapGestureRecognizer
+						NumberOfTapsRequired = "2"
+						Tapped = "OpenCloseTextHistory"/>
+					<TapGestureRecognizer
+						Tapped = "TextTapped"/>
+				</Frame.GestureRecognizers>	
+			</Frame>
+			<StackLayout x:Name = "buttonsField" HorizontalOptions = "Center" VerticalOptions = "End" Margin = "15, 5, 15, 60" />
+		</StackLayout>
+	</ScrollView>
+	
+	<StackLayout x:Name = "bgDarkness" BackgroundColor = "#99000000" IsVisible = "false" Opacity = "0">
+		<Frame
+			x:Name = "menu"
+			IsVisible = "false"
+			BackgroundColor = "#252530"
+			HorizontalOptions = "Center"
+			VerticalOptions = "CenterAndExpand"
+			Margin = "20"
+			CornerRadius = "10">
+			<StackLayout HorizontalOptions = "FillAndExpand">
+				<Button
+					Text = "Главное меню" BindingContext = "mainPage" Clicked = "ButtonClickEventHandler" Style = "{StaticResource menuButtons}"/>
+				<Button
+					Text = "Сохранить игру" Clicked = "SaveGame" Style = "{StaticResource menuButtons}"/>
+				<Button
+					Text = "Отключить музыку" BindingContext = "On" Clicked = "MuteUnmuteMusic" Style = "{StaticResource menuButtons}"/>
+				<Button
+					Text = "Выйти из игры" Clicked = "ExitTheGame" Style = "{StaticResource menuButtons}"/>
+				<Grid Margin = "0, 20, 0, 2">
+					<BoxView 
+						x:Name = "closeButtonBorder" CornerRadius = "60" HorizontalOptions = "Center" WidthRequest = "60" HeightRequest = "60" BackgroundColor = "#ff363652" Opacity = "0" />
+					<ImageButton
+						x:Name = "closeButton" 
+						WidthRequest = "60" 
+						HeightRequest = "60" 
+						Padding = "10"
+						HorizontalOptions = "Center" 
+						BackgroundColor = "#00000000" 
+						Clicked = "CloseMenuWithButton" 
+						Source = "resources/Icons/close.png" />
+				</Grid>
+			</StackLayout>
+		</Frame>
+		
+		<Frame
+			x:Name = "textHistoryField"
+			IsVisible = "false"
+			BackgroundColor = "#252530"
+			VerticalOptions = "FillAndExpand"
+			HorizontalOptions = "FillAndExpand"
+			CornerRadius = "10"
+			Margin = "30"
+			Padding = "0"
+			Opacity = "0">
+			<StackLayout>
+				<ScrollView x:Name = "textHistoryScroll" VerticalOptions = "StartAndExpand">
+					<StackLayout
+						x:Name = "textHistory"/>
+				</ScrollView>
+				<Button Text = "Закрыть" Margin = "0" VerticalOptions = "End" CornerRadius = "0" Clicked = "OpenCloseTextHistory" Opacity = "1"/>
+			</StackLayout>
+		</Frame>
+	</StackLayout>
+</Grid>
+</ContentPage>
